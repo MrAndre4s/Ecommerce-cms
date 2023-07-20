@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\AttachmentController;
+use App\Http\Controllers\Main\IndexController;
+use App\Http\Controllers\ManufacturerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', IndexController::class)->name('main.index');
+
+Route::resource('attachments', AttachmentController::class);
+Route::resource('manufacturers', ManufacturerController::class);
+
