@@ -19,5 +19,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', IndexController::class)->name('main.index');
 
 Route::resource('attachments', AttachmentController::class);
+
+Route::get('manufacturers/deleted', [ManufacturerController::class, 'deleted'])->name('manufacturers.deleted');
+Route::delete('manufacturers/deleted/{manufacturer}', [ManufacturerController::class, 'forceDelete'])->withTrashed()->name('manufacturers.force_delete');
+Route::post('manufacturers/restore/{manufacturer}', [ManufacturerController::class, 'restore'])->withTrashed()->name('manufacturers.restore');
 Route::resource('manufacturers', ManufacturerController::class);
+
 

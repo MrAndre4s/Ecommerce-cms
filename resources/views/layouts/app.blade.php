@@ -393,15 +393,15 @@
                                     <span class="menu-heading fw-bold text-uppercase fs-7">Основные</span>
                                 </div>
                             </div>
-                            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                                <div class="menu-item">
-                                    <a class="menu-link" href="{{ route('attachments.index') }}">
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{ route('attachments.index') }}">
 									    <span class="menu-icon">
 									    	<i class="fa-solid fa-photo-film"></i>
 									    </span>
-                                        <span class="menu-title">Медиафайлы</span>
-                                    </a>
-                                </div>
+                                    <span class="menu-title">Медиафайлы</span>
+                                </a>
+                            </div>
+                            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                                 <span class="menu-link">
 									<span class="menu-icon">
 										<i class="fa-solid fa-industry"></i>
@@ -414,7 +414,7 @@
                                         <div class="menu-item">
                                             <a class="menu-link" href="{{ route('manufacturers.index') }}">
 												<span class="menu-icon">
-										            <i class="fa-solid fa-bars"></i>
+										            <span class="bullet bullet-dot"></span>
 									            </span>
                                                 <span class="menu-title">Производители</span>
                                             </a>
@@ -422,173 +422,18 @@
                                         <div class="menu-item">
                                             <a class="menu-link" href="{{ route('manufacturers.create') }}">
 												<span class="menu-icon">
-										            <i class="fa-solid fa-plus"></i>
+										            <span class="bullet bullet-dot"></span>
 									            </span>
                                                 <span class="menu-title">Добавить производителя</span>
                                             </a>
                                         </div>
                                         <div class="menu-item">
-                                            <a class="menu-link" href="#">
+                                            <a class="menu-link" href="{{ route('manufacturers.deleted') }}">
 												<span class="menu-icon">
-										            <i class="fa-solid fa-trash-can"></i>
+										            <span class="bullet bullet-dot"></span>
 									            </span>
                                                 <span class="menu-title">Корзина</span>
                                             </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                                <span class="menu-link">
-									<span class="menu-icon">
-										<i class="fa-solid fa-shop"></i>
-									</span>
-									<span class="menu-title">Торговля</span>
-									<span class="menu-arrow"></span>
-                                </span>
-                                <div class="menu-sub menu-sub-accordion">
-                                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                                        <span class="menu-link">
-											<span class="menu-bullet">
-												<span class="bullet bullet-dot"></span>
-											</span>
-											<span class="menu-title">Каталог</span>
-											<span class="menu-arrow"></span>
-                                        </span>
-                                        <div class="menu-sub menu-sub-accordion">
-                                            <div class="menu-item">
-                                                <a class="menu-link" href="{{ route('products.index') }}">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-                                                    <span class="menu-title">Товары</span>
-                                                </a>
-                                            </div>
-                                            <div class="menu-item">
-                                                <a class="menu-link" href="{{ route('products.create') }}">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-                                                    <span class="menu-title">Добавить товар</span>
-                                                </a>
-                                            </div>
-                                            <div class="menu-item">
-                                                <a class="menu-link"
-                                                   href="#">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-                                                    <span class="menu-title">Корзина</span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                                        <span class="menu-link">
-											<span class="menu-bullet">
-												<span class="bullet bullet-dot"></span>
-											</span>
-											<span class="menu-title">Категории</span>
-											<span class="menu-arrow"></span>
-										</span>
-                                        <div class="menu-sub menu-sub-accordion">
-                                            <div class="menu-item">
-                                                <a class="menu-link" href="{{ route('product-categories.index') }}">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-                                                    <span class="menu-title">Категории</span>
-                                                </a>
-                                            </div>
-                                            <div class="menu-item">
-                                                <a class="menu-link"
-                                                   href="{{ route('product-categories.create') }}">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-                                                    <span class="menu-title">Добавить категорию</span>
-                                                </a>
-                                            </div>
-                                            <div class="menu-item">
-                                                <a class="menu-link" href="#">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-                                                    <span class="menu-title">Корзина</span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                                        <span class="menu-link">
-											<span class="menu-bullet">
-												<span class="bullet bullet-dot"></span>
-											</span>
-											<span class="menu-title">Теги</span>
-											<span class="menu-arrow"></span>
-										</span>
-                                        <div class="menu-sub menu-sub-accordion">
-                                            <div class="menu-item">
-                                                <a class="menu-link" href="{{ route('product-tags.index') }}">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-                                                    <span class="menu-title">Теги</span>
-                                                </a>
-                                            </div>
-                                            <div class="menu-item">
-                                                <a class="menu-link" href="{{ route('product-tags.create') }}">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-                                                    <span class="menu-title">Добавить тег</span>
-                                                </a>
-                                            </div>
-                                            <div class="menu-item">
-                                                <a class="menu-link" href="{{ route('product-tags.create') }}">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-                                                    <span class="menu-title">Корзина</span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                                        <span class="menu-link">
-											<span class="menu-bullet">
-												<span class="bullet bullet-dot"></span>
-											</span>
-											<span class="menu-title">Характеристики</span>
-											<span class="menu-arrow"></span>
-										</span>
-                                        <div class="menu-sub menu-sub-accordion">
-                                            <div class="menu-item">
-                                                <a class="menu-link"
-                                                   href="{{ route('product-characteristics.index') }}">
-                                                    <span class="menu-bullet">
-                                                        <span class="bullet bullet-dot"></span>
-                                                    </span>
-                                                    <span class="menu-title">Характеристики</span>
-                                                </a>
-                                            </div>
-                                            <div class="menu-item">
-                                                <a class="menu-link"
-                                                   href="{{ route('product-characteristics.create') }}">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-                                                    <span class="menu-title">Добавить характеристику</span>
-                                                </a>
-                                            </div>
-                                            <div class="menu-item">
-                                                <a class="menu-link" href="#">
-															<span class="menu-bullet">
-																<span class="bullet bullet-dot"></span>
-															</span>
-                                                    <span class="menu-title">Корзина</span>
-                                                </a>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
