@@ -114,7 +114,7 @@
                         </table>
                         <div class="row">
                             <div class="col d-flex align-items-center justify-content-end justify-content-md-end">
-                                {{ $deleteManufacturers    ->links() }}
+                                {{ $deleteManufacturers->links() }}
                             </div>
                         </div>
                     </div>
