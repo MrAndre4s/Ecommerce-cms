@@ -4,6 +4,7 @@ use App\Http\Controllers\AttachmentController;
 use App\Http\Controllers\Main\IndexController;
 use App\Http\Controllers\ManufacturerController;
 use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\ProductCharacteristicController;
 use App\Http\Controllers\ProductTagController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,3 +37,8 @@ Route::get('product-categories/deleted', [ProductCategoryController::class, 'del
 Route::delete('product-categories/deleted/{productCategory}', [ProductCategoryController::class, 'forceDelete'])->withTrashed()->name('product-categories.force_delete');
 Route::post('product-categories/restore/{productCategory}', [ProductCategoryController::class, 'restore'])->withTrashed()->name('product-categories.restore');
 Route::resource('product-categories', ProductCategoryController::class);
+
+Route::get('product-characteristics/deleted', [ProductCharacteristicController::class, 'deleted'])->name('product-characteristics.deleted');
+Route::delete('product-characteristics/deleted/{productCharacteristic}', [ProductCharacteristicController::class, 'forceDelete'])->withTrashed()->name('product-characteristics.force_delete');
+Route::post('product-characteristics/restore/{productCharacteristic}', [ProductCharacteristicController::class, 'restore'])->withTrashed()->name('product-characteristics.restore');
+Route::resource('product-characteristics', ProductCharacteristicController::class);
