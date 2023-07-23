@@ -3,6 +3,7 @@
 use App\Http\Controllers\AttachmentController;
 use App\Http\Controllers\Main\IndexController;
 use App\Http\Controllers\ManufacturerController;
+use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductTagController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,4 +32,7 @@ Route::delete('product-tags/deleted/{productTag}', [ProductTagController::class,
 Route::post('product-tags/restore/{productTag}', [ProductTagController::class, 'restore'])->withTrashed()->name('product-tags.restore');
 Route::resource('product-tags', ProductTagController::class);
 
-
+Route::get('product-categories/deleted', [ProductCategoryController::class, 'deleted'])->name('product-categories.deleted');
+Route::delete('product-categories/deleted/{productCategory}', [ProductCategoryController::class, 'forceDelete'])->withTrashed()->name('product-categories.force_delete');
+Route::post('product-categories/restore/{productCategory}', [ProductCategoryController::class, 'restore'])->withTrashed()->name('product-categories.restore');
+Route::resource('product-categories', ProductCategoryController::class);

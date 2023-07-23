@@ -448,7 +448,42 @@
                                 </span>
                                 <div class="menu-sub menu-sub-accordion">
 
-
+                                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                                        <span class="menu-link">
+											<span class="menu-bullet">
+												<span class="bullet bullet-dot"></span>
+											</span>
+											<span class="menu-title">Категории товаров</span>
+											<span class="menu-arrow"></span>
+										</span>
+                                        <div class="menu-sub menu-sub-accordion">
+                                            <div class="menu-item">
+                                                <a class="menu-link" href="{{ route('product-categories.index') }}">
+													<span class="menu-bullet">
+														<span class="bullet bullet-dot"></span>
+													</span>
+                                                    <span class="menu-title">Категории</span>
+                                                </a>
+                                            </div>
+                                            <div class="menu-item">
+                                                <a class="menu-link"
+                                                   href="{{ route('product-categories.create') }}">
+													<span class="menu-bullet">
+														<span class="bullet bullet-dot"></span>
+													</span>
+                                                    <span class="menu-title">Добавить категорию</span>
+                                                </a>
+                                            </div>
+                                            <div class="menu-item">
+                                                <a class="menu-link" href="{{ route('product-categories.deleted') }}">
+													<span class="menu-bullet">
+														<span class="bullet bullet-dot"></span>
+													</span>
+                                                    <span class="menu-title">Корзина</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                                         <span class="menu-link">
 											<span class="menu-bullet">
