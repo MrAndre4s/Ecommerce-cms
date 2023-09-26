@@ -5,7 +5,7 @@
             <div id="kt_app_toolbar_container" class="app-container d-flex flex-stack">
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
-                        Новый товар
+                        {{ $product->title }}
                     </h1>
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                         <li class="breadcrumb-item text-muted">
@@ -20,18 +20,19 @@
                         <li class="breadcrumb-item">
                             <span class="bullet bg-gray-400 w-5px h-2px"></span>
                         </li>
-                        <li class="breadcrumb-item text-muted">Добавление</li>
+                        <li class="breadcrumb-item text-muted">Редактирование</li>
                     </ul>
                 </div>
             </div>
         </div>
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <div id="kt_app_content_container" class="app-container">
-                <form class="form d-flex flex-column flex-lg-row" action="{{ route('products.store') }}" method="post">
+                <form class="form d-flex flex-column flex-lg-row" action="{{ route('products.update', $product) }}"
+                      method="post">
                     @csrf
+                    @method('PUT')
                     <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10 me-lg-10">
-                        <ul
-                            class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-n2">
+                        <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-n2">
                             <li class="nav-item">
                                 <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab"
                                    href="#kt_ecommerce_add_product_general">Основные</a>
@@ -54,9 +55,9 @@
                                         <div class="card-body pt-0">
                                             <div class="mb-10">
                                                 <label class="required form-label">Название товара</label>
-                                                <input type="text" name="title"
-                                                       class="form-control mb-2" placeholder="Название"
-                                                       value="{{ old('title', '') }}"/>
+                                                <input type="text" name="title" class="form-control mb-2"
+                                                       placeholder="Название"
+                                                       value="{{ old('title', $product->title) }}"/>
                                                 @error('title')
                                                 <div class="fs-7 text-danger">{{ $message }}</div>
                                                 @enderror
@@ -65,7 +66,7 @@
                                                 <label class="form-label">Описание</label>
                                                 <textarea id="tinymce_editor" name="content"
                                                           class="tox-target">
-                                                    {{ old('content' ,'') }}
+                                                    {{ old('content', $product->content) }}
                                                 </textarea>
                                                 @error('content')
                                                 <div class="fs-7 text-danger">{{ $message }}</div>
@@ -79,7 +80,7 @@
                                                     <option selected disabled>Выберите производителя</option>
                                                     @foreach($manufacturers as $manufacturer)
                                                         <option value="{{ $manufacturer->id }}"
-                                                            @selected(old('manufacturer_id', '') == $manufacturer->id)>
+                                                            @selected(old('manufacturer_id', $product->manufacturer->id) == $manufacturer->id)>
                                                             {{ $manufacturer->title }}
                                                         </option>
                                                     @endforeach
@@ -134,7 +135,8 @@
                                             <div class="mb-10">
                                                 <label class="required form-label">Артикул</label>
                                                 <input type="text" name="sku" class="form-control mb-2"
-                                                       placeholder="Артикул товара" value="{{ old('sku', '') }}"/>
+                                                       placeholder="Артикул товара"
+                                                       value="{{ old('sku', $product->sku) }}"/>
                                                 @error('sku')
                                                 <div class="fs-7 text-danger">{{ $message }}</div>
                                                 @enderror
@@ -144,7 +146,7 @@
                                                 <div class="d-flex gap-3">
                                                     <input type="number" name="price"
                                                            class="form-control mb-2" placeholder="Цена товара"
-                                                           value="{{ old('price') }}"/>
+                                                           value="{{ old('price', $product->price) }}"/>
                                                 </div>
                                                 @error('price')
                                                 <div class="fs-7 text-danger">{{ $message }}</div>
@@ -155,7 +157,7 @@
                                                 <div class="d-flex gap-3">
                                                     <input type="number" name="discount_price"
                                                            class="form-control mb-2" placeholder="Цена"
-                                                           value="{{ old('discount_price') }}"/>
+                                                           value="{{ old('discount_price', $product->discount_price) }}"/>
                                                 </div>
                                                 @error('discount_price')
                                                 <div class="fs-7 text-danger">{{ $message }}</div>
@@ -166,7 +168,7 @@
                                                 <div class="d-flex gap-3">
                                                     <input type="number" name="stock"
                                                            class="form-control mb-2" placeholder="Запасы"
-                                                           value="{{ old('stock') }}"/>
+                                                           value="{{ old('stock', $product->stock) }}"/>
                                                 </div>
                                                 @error('stock')
                                                 <div class="fs-7 text-danger">{{ $message }}</div>
@@ -175,7 +177,8 @@
                                             <div class="mb-10">
                                                 <label class="form-label">Рейтинг</label>
                                                 <input type="number" name="rating" class="form-control mb-2"
-                                                       placeholder="Рейтинг товара" value="{{ old('rating') }}"/>
+                                                       placeholder="Рейтинг товара"
+                                                       value="{{ old('rating', $product->rating) }}"/>
                                                 @error('rating')
                                                 <div class="fs-7 text-danger">{{ $message }}</div>
                                                 @enderror
@@ -190,12 +193,12 @@
                                         </div>
                                         <div class="card-body pt-0">
                                             <label class="form-label">Добавить характеристики</label>
-                                            <div id="product_characteristics">
+                                            <div id="product_characteristics" data-init-empty="false">
                                                 <div class="form-group">
                                                     <div data-repeater-list="product_characteristics"
                                                          class="d-flex flex-column gap-3">
-                                                        @if(!empty(old('product_characteristics')))
-                                                            @foreach(old('product_characteristics') as $oldCharacteristics)
+                                                        @if(count($product->productCharacteristics) > 0)
+                                                            @foreach($product->productCharacteristics as $productCharacteristic)
                                                                 <div data-repeater-item
                                                                      class="form-group d-flex flex-wrap align-items-center gap-5">
                                                                     <div class="w-100 w-md-300px">
@@ -208,7 +211,7 @@
                                                                             @foreach($productCharacteristics as $characteristic)
                                                                                 <option
                                                                                     value="{{ $characteristic->id }}"
-                                                                                    @selected($oldCharacteristics['product_characteristic_id'] == $characteristic->id)>
+                                                                                    @selected($productCharacteristic->id == $characteristic->id)>
                                                                                     {{ $characteristic->title }}
                                                                                 </option>
                                                                             @endforeach
@@ -217,7 +220,7 @@
                                                                     <input type="text"
                                                                            class="form-control mw-100 w-200px"
                                                                            name="value"
-                                                                           value="{{ $oldCharacteristics['value'] }}"
+                                                                           value="{{ $productCharacteristic->pivot->value }}"
                                                                            placeholder="Значение"/>
                                                                     <button type="button"
                                                                             data-repeater-delete=""
@@ -313,30 +316,25 @@
                                         class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
                                         data-kt-image-input-action="cancel" data-bs-toggle="tooltip"
                                         title="Cancel avatar">
-														<i class="ki-duotone ki-cross fs-2">
-															<span class="path1"></span>
-															<span class="path2"></span>
-														</i>
-													</span>
+											<i class="ki-duotone ki-cross fs-2">
+												<span class="path1"></span>
+												<span class="path2"></span>
+											</i>
+										</span>
                                     <span
                                         class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
                                         data-kt-image-input-action="remove" data-bs-toggle="tooltip"
                                         title="Remove avatar">
-														<i class="ki-duotone ki-cross fs-2">
-															<span class="path1"></span>
-															<span class="path2"></span>
-														</i>
-													</span>
-                                    <!--end::Remove-->
+											<i class="ki-duotone ki-cross fs-2">
+												<span class="path1"></span>
+												<span class="path2"></span>
+											</i>
+										</span>
                                 </div>
-                                <!--end::Image input-->
-                                <!--begin::Description-->
                                 <div class="text-muted fs-7">Set the product thumbnail image. Only
                                     *.png, *.jpg and *.jpeg image files are accepted
                                 </div>
-                                <!--end::Description-->
                             </div>
-                            <!--end::Card body-->
                         </div>
                         <div class="card card-flush py-4">
                             <div class="card-header">
@@ -354,17 +352,18 @@
                                     <option></option>
                                     @foreach($postStatus as $key => $status)
                                         <option value="{{ $status }}"
-                                            @selected(old('post_status') == $status)>{{ $status }}
+                                            @selected(old('post_status', $product->post_status) == $status)>{{ $status }}
                                         </option>
                                     @endforeach
                                 </select>
                                 @error('post_status')
                                 <div class="fs-7 text-danger">{{ $message }}</div>
                                 @enderror
-                                <div class="mt-10 ">
+                                <div
+                                    class="mt-10 {{ ($product->post_status->key !== 'SCHEDULED') ? 'd-none' : '' }}">
                                     <label for="published_at" class="form-label">Дата публикации</label>
                                     <input class="form-control" id="published_at" name="published_at"
-                                           value="{{ old('published_at') }}"
+                                           value="{{ old('published_at', $product->published_at) }}"
                                            placeholder="Выберите дату"/>
                                     @error('published_at')
                                     <div class="fs-7 text-danger">{{ $message }}</div>
@@ -381,7 +380,7 @@
                             <div class="card-body pt-0">
                                 <div class="form-check form-switch form-check-custom form-check-solid mb-4">
                                     <input class="form-check-input" type="checkbox" name="is_recommended" value="1"
-                                           id="flexSwitchDefault"/>
+                                           id="flexSwitchDefault" @checked(old('is_recommended', $product->is_recommended))/>
                                     <label class="form-check-label" for="flexSwitchDefault">
                                         Рекомендовать товар
                                     </label>
@@ -394,7 +393,10 @@
                                         data-placeholder="Выберите категорию" data-allow-clear="true">
                                     <option selected disabled></option>
                                     @foreach($productCategories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->title }}</option>
+                                        <option value="{{ $category->id }}"
+                                            @selected(old('product_category_id', $product->productCategory->id) == $category->id)>
+                                            {{ $category->title }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 @error('product_category_id')
@@ -405,7 +407,10 @@
                                         data-placeholder="Выберите теги" data-allow-clear="true"
                                         multiple="multiple">
                                     @foreach($productTags as $tag)
-                                        <option value="{{ $tag->id }}">{{ $tag->title }}</option>
+                                        <option value="{{ $tag->id }}"
+                                            @selected(old('product_tags[]', in_array($tag->id, $product->productTags->pluck('id')->toArray())))>
+                                            {{ $tag->title }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 @error('product_tags')
@@ -421,19 +426,12 @@
                                 <button type="submit" id="kt_ecommerce_add_product_submit"
                                         class="btn btn-primary">
                                     <span class="indicator-label">Сохранить</span>
-                                    <span class="indicator-progress">Сохранение...
-										<span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                                    </span>
                                 </button>
                             </div>
                         </div>
                     </div>
-                    <!--end::Aside column-->
                 </form>
-                <!--end::Form-->
             </div>
-            <!--end::Content container-->
         </div>
-        <!--end::Content-->
     </div>
 @endsection

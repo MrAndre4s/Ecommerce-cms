@@ -1,3 +1,10 @@
+tinymce.init({
+    selector: "#tinymce_editor",
+    height: "480",
+    skin: (KTThemeMode.getMode() === "dark") ? "oxide-dark" : "",
+    content_css: (KTThemeMode.getMode() === "dark") ? "dark" : "",
+});
+
 $('#published_at').flatpickr({dateFormat: "Y-m-d"});
 
 $('select[name="post_status"]').on('change', (event) => {
@@ -18,16 +25,14 @@ $('[data-bs-target="#modal-delete"]').on('click', (event) => {
     $('#modal-delete form .modal-body span').text(title);
 });
 
-$(document).ready(() => {
-    $('#product_characteristics').repeater({
-        initEmpty: true,
-        
-        show: function () {
-            $(this).slideDown();
-        },
+$('#product_characteristics').repeater({
+    initEmpty: $('#product_characteristics').data('init-empty'),
 
-        hide: function (deleteElement) {
-            $(this).slideUp(deleteElement);
-        }
-    });
+    show: function () {
+        $(this).slideDown();
+    },
+
+    hide: function (deleteElement) {
+        $(this).slideUp(deleteElement);
+    }
 });

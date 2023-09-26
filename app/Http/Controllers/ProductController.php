@@ -16,9 +16,9 @@ class ProductController extends Controller
 {
     private Service $service;
 
-    public function __construct(Service $service)
+    public function __construct()
     {
-        $this->service = $service;
+        $this->service = new Service();
     }
 
     /**
@@ -26,7 +26,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate(20);
+        $products = Product::orderbyDesc('created_at')->paginate(20);
 
         return view('products.index', compact('products'));
     }
@@ -36,12 +36,13 @@ class ProductController extends Controller
      */
     public function create()
     {
+        $postStatus = PostStatus::asArray();
         $manufacturers = Manufacturer::all();
         $productTags = ProductTag::all();
         $productCategories = ProductCategory::all();
         $productCharacteristics = ProductCharacteristic::all();
 
-        return view('products.create', compact('manufacturers', 'productTags', 'productCategories', 'productCharacteristics'));
+        return view('products.create', compact('postStatus', 'manufacturers', 'productTags', 'productCategories', 'productCharacteristics'));
     }
 
     /**
@@ -68,7 +69,12 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $postStatus = PostStatus::asArray();
+        $manufacturers = Manufacturer::all();
+        $productTags = ProductTag::all();
+        $productCategories = ProductCategory::all();
+        $productCharacteristics = ProductCharacteristic::all();
+        return view('products.edit', compact('product', 'postStatus', 'manufacturers', 'productTags', 'productCategories', 'productCharacteristics'));
     }
 
     /**
@@ -76,7 +82,10 @@ class ProductController extends Controller
      */
     public function update(UpdateRequest $request, Product $product)
     {
-        //
+        $data = $request->validated();
+        $this->service->update($product, $data);
+
+        return redirect()->route('products.edit', $product);
     }
 
     /**
@@ -84,7 +93,25 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        $product->deleteo();
+        $product->delete();
         return redirect()->route('products.index');
+    }
+
+    public function deleted()
+    {
+        $deleteProducts = Product::onlyTrashed()->paginate(20);
+        return view('products.deleted', compact('deleteProducts'));
+    }
+
+    public function restore(Product $product)
+    {
+        $product->restore();
+        return redirect()->route('products.deleted');
+    }
+
+    public function forceDelete(Product $product)
+    {
+        $product->forceDelete();
+        return redirect()->route('products.deleted');
     }
 }

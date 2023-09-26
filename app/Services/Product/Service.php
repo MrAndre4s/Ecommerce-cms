@@ -3,35 +3,64 @@
 namespace App\Services\Product;
 
 use App\Models\Product;
+use DB;
+use Exception;
 
 class Service
 {
     public function store($data)
     {
-        $productsTags = [];
-        $productCharacteristics = [];
+        try {
+            DB::beginTransaction();
+            $productsTags = [];
+            $productCharacteristics = [];
 
-        if (isset($data['product_tags'])) {
-            $productsTags = $data['product_tags'];
-            unset($data['product_tags']);
+            if (isset($data['product_tags'])) {
+                $productsTags = $data['product_tags'];
+                unset($data['product_tags']);
+            }
+            if (isset($data['product_characteristics'])) {
+                $productCharacteristics = $this->getProductCharacteristics($data['product_characteristics']);
+                unset($data['product_characteristics']);
+            }
+
+            $product = Product::create($data);
+            $product->productCharacteristics()->attach($productCharacteristics);
+            $product->productTags()->attach($productsTags);
+
+            DB::commit();
+        } catch (Exception $exception) {
+            DB::rollBack();
+            dd($exception);
         }
-        if (isset($data['product_tags'])) {
-            $productCharacteristics = $this->getProductCharacteristics($data['product_characteristics']);
-            unset($data['product_characteristics']);
-        }
 
-        $product = Product::create($data);
-
-        $product->productCharacteristics()->attach($productCharacteristics);
-        $product->productTags()->attach($productsTags);
     }
 
-    public function update($data)
+    public function update(Product $product, $data)
     {
-
+        try {
+            DB::beginTransaction();
+            $productsTags = [];
+            $productCharacteristics = [];
+            if (isset($data['product_tags'])) {
+                $productsTags = $data['product_tags'];
+                unset($data['product_tags']);
+            }
+            if (isset($data['product_characteristics'])) {
+                $productCharacteristics = $this->getProductCharacteristics($data['product_characteristics']);
+                unset($data['product_characteristics']);
+            }
+            $product->update($data);
+            $product->productCharacteristics()->sync($productCharacteristics);
+            $product->productTags()->sync($productsTags);
+            DB::commit();
+        } catch (Exception $exception) {
+            DB::rollBack();
+            dd($exception);
+        }
     }
 
-    public function destroy()
+    public function destroy(Product $product)
     {
 
     }

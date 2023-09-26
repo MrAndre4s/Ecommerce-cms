@@ -45,6 +45,6 @@ Route::post('product-characteristics/restore/{productCharacteristic}', [ProductC
 Route::resource('product-characteristics', ProductCharacteristicController::class);
 
 Route::get('products/deleted', [ProductController::class, 'deleted'])->name('products.deleted');
-Route::delete('products/deleted/{productCategory}', [ProductController::class, 'forceDelete'])->withTrashed()->name('products.force_delete');
-Route::post('products/restore/{productCategory}', [ProductController::class, 'restore'])->withTrashed()->name('products.restore');
+Route::delete('products/deleted/{product}', [ProductController::class, 'forceDelete'])->withTrashed()->name('products.force_delete');
+Route::post('products/restore/{product}', [ProductController::class, 'restore'])->withTrashed()->name('products.restore');
 Route::resource('products', ProductController::class);

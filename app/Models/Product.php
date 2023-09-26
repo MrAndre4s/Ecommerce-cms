@@ -17,6 +17,11 @@ class Product extends BaseModel
         'post_status' => PostStatus::class,
     ];
 
+    public function manufacturer(): BelongsTo
+    {
+        return $this->belongsTo(Manufacturer::class, 'manufacturer_id', 'id');
+    }
+
     public function productCategory(): BelongsTo
     {
         return $this->belongsTo(ProductCategory::class, 'product_category_id', 'id');
@@ -29,6 +34,6 @@ class Product extends BaseModel
 
     public function productCharacteristics(): BelongsToMany
     {
-        return $this->belongsToMany(ProductCharacteristic::class, 'product_product_characteristic', 'product_id', 'product_characteristic_id');
+        return $this->belongsToMany(ProductCharacteristic::class, 'product_product_characteristic', 'product_id', 'product_characteristic_id')->withPivot('value');
     }
 }

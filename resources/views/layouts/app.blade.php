@@ -473,8 +473,7 @@
                                                 </a>
                                             </div>
                                             <div class="menu-item">
-                                                <a class="menu-link"
-                                                   href="#">
+                                                <a class="menu-link" href="{{ route('products.deleted') }}">
 													<span class="menu-bullet">
 														<span class="bullet bullet-dot"></span>
 													</span>
@@ -638,12 +637,13 @@
     </div>
 </div>
 
-
 <script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
 <script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
-<script src="{{ asset('assets/js/main.js') }}"></script>
 
 <script src="{{ asset('assets/plugins/custom/formrepeater/formrepeater.bundle.js') }}"></script>
 <script src="{{ asset('assets/plugins/custom/tinymce/tinymce.bundle.js') }}"></script>
+
+<script src="{{ asset('assets/js/main.js') }}"></script>
+
 </body>
 </html>

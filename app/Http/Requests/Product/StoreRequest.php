@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Product;
 
+use App\Enums\PostStatus;
+use BenSampo\Enum\Rules\EnumValue;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRequest extends FormRequest
@@ -25,6 +27,7 @@ class StoreRequest extends FormRequest
             'title' => 'string|required',
             'content' => 'string|nullable',
 //            'attachment_id' => '',
+            'post_status' => [new EnumValue(PostStatus::class)],
             'manufacturer_id' => 'numeric|nullable',
             'product_category_id' => 'numeric|nullable',
             'sku' => 'string|required|unique:products,sku|',
